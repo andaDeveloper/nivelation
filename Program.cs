@@ -7,9 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<BookContext>(
-
     options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString(""))
+        options.UseSqlServer(builder.Configuration.GetConnectionString("BooksConnection"))
     );
 
 var app = builder.Build();
