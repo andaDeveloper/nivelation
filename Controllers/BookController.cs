@@ -84,5 +84,18 @@ namespace PruebaNivelacion.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(BookModel book)
+        {
+            var bookToDelete = _context.Books.Find(book.Id_libro);
+            if (bookToDelete  != null) {
+                _context.Books.Remove(bookToDelete);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Books");
+            }
+            return RedirectToAction("Books");
+
+        }
+
     }
 }
