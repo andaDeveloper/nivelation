@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PruebaNivelacion.Models;
 
 namespace PruebaNivelacion.Controllers
@@ -13,9 +14,9 @@ namespace PruebaNivelacion.Controllers
         {
             _context = context;
         }
-        public ActionResult Books()
+        public async Task<ActionResult> Books()
         {
-            var books = _context.Books.Take(5).ToList();
+            var books = await _context.Books.ToListAsync();
 
             return View(books);
 
@@ -33,6 +34,8 @@ namespace PruebaNivelacion.Controllers
             string name = newBook.Nombre_libro;
             string author = newBook.Autor;
             DateTime releaseDate = newBook.Fecha_lanzamiento;
+
+            //replace for user session
             string user = "stan";
 
             var insertion = new BookModel
@@ -48,7 +51,7 @@ namespace PruebaNivelacion.Controllers
             {
                 await _context.Books.AddAsync(insertion);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Create");
+                return RedirectToAction("Books");
             }
             catch (Exception ex)
             {
@@ -57,16 +60,28 @@ namespace PruebaNivelacion.Controllers
 
         }
 
-        [Route("update")]
-        public ActionResult Update()
+        [HttpGet]
+        public async Task<IActionResult> View(int id)
         {
-            return View();
-        }
+                var book = await _context.Books.FirstOrDefaultAsync(book => book.Id_libro == id); 
 
-        [Route("delete")]
-        public ActionResult Delete()
-        {
-            return View();
+                if(book != null) 
+                {
+                    var injection = new BookModel
+                    {
+
+                        Id_libro = book.Id_libro, Nombre_libro = book.Nombre_libro,
+                        Autor = book.Autor,
+                        Fecha_lanzamiento = book.Fecha_lanzamiento,
+                        Campos_auditoria = book.Campos_auditoria
+
+                    };
+
+                    return View(injection);
+                }
+
+            return RedirectToAction("Index");
+
         }
 
     }
