@@ -15,9 +15,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-   var context = scope.ServiceProvider.GetRequiredService<BookContext>();
-   context.Database.Migrate();
-   context.Database.EnsureCreated();
+    var context = scope.ServiceProvider.GetRequiredService<BookContext>();
+    context.Database.Migrate();
+    context.Database.EnsureCreated();
 }
 
 

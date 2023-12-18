@@ -16,23 +16,39 @@ namespace PruebaNivelacion.Controllers
         }
         public ActionResult Books()
         {
-            /*var books = _context.Books.Take(5).ToList();
-            var booksViewModel = books.Select(book => new BookModel
-            {
-                Nombre_libro = book.Nombre_libro,
-                Autor = book.Autor,
-                Fecha_lanzamiento = book.Fecha_lanzamiento,
-                Campos_auditoria = book.Campos_auditoria,
-            }).ToList();
+            var books = _context.Books.Take(5).ToList();
 
-            return View("Books", booksViewModel); */
-            return View();
+            return View(books);
+
         }
 
 
         [Route("create")]
-        public ActionResult Create()
+        public IActionResult Create(BookModel newBook)
         {
+            string name = newBook.Nombre_libro;
+            string author = newBook.Autor;
+            DateTime releaseDate = newBook.Fecha_lanzamiento;
+            string user = "stan";
+
+            var insertion = new BookModel
+            {
+
+                Nombre_libro = name,
+                Autor = author,
+                Fecha_lanzamiento = releaseDate,
+                Campos_auditoria = user
+            };
+
+            try
+            {
+                _context.Books.Add(insertion);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             return View();
         }
 

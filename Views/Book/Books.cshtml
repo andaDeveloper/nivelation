@@ -1,10 +1,12 @@
-﻿@{
+﻿@model List<BookModel>
+
+@{
     ViewData["Title"] = "Library";
+    //var list = ViewBag.Books as List<string>;
 }
 <h1>@ViewData["Title"]</h1>
 
-@*
-@model List<booksViewModel>
+
 
 <table>
     <thead>
@@ -27,4 +29,3 @@
         }
     </tbody>
 </table>
-*@
