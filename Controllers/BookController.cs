@@ -16,7 +16,7 @@ namespace PruebaNivelacion.Controllers
         }
         public ActionResult Books()
         {
-            var books = _context.Books.Take(5).ToList();
+            /*var books = _context.Books.Take(5).ToList();
             var booksViewModel = books.Select(book => new BookModel
             {
                 Nombre_libro = book.Nombre_libro,
@@ -25,7 +25,8 @@ namespace PruebaNivelacion.Controllers
                 Campos_auditoria = book.Campos_auditoria,
             }).ToList();
 
-            return View("Books", booksViewModel);
+            return View("Books", booksViewModel); */
+            return View();
         }
 
 

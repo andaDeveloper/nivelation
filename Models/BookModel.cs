@@ -15,7 +15,6 @@ namespace PruebaNivelacion.Models
     public class BookModel
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id_libro { get; set; }
         public string Nombre_libro { get; set; }
         public string Autor { get; set; }

@@ -13,11 +13,12 @@ builder.Services.AddDbContext<BookContext>(
 
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//   var context = scope.ServiceProvider.GetRequiredService<BookContext>();
-//    context.Database.Migrate();
-//}
+using (var scope = app.Services.CreateScope())
+{
+   var context = scope.ServiceProvider.GetRequiredService<BookContext>();
+   context.Database.Migrate();
+   context.Database.EnsureCreated();
+}
 
 
 // Configure the HTTP request pipeline.
