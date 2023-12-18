@@ -5,7 +5,6 @@ using PruebaNivelacion.Models;
 
 namespace PruebaNivelacion.Controllers
 {
-    [Route("books")]
     public class BookController : Controller
     {
         private BookContext _context;
@@ -22,9 +21,14 @@ namespace PruebaNivelacion.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        [Route("create")]
-        public IActionResult Create(BookModel newBook)
+        [HttpPost]
+        public async Task<IActionResult> Create(BookModel newBook)
         {
             string name = newBook.Nombre_libro;
             string author = newBook.Autor;
@@ -42,14 +46,15 @@ namespace PruebaNivelacion.Controllers
 
             try
             {
-                _context.Books.Add(insertion);
+                await _context.Books.AddAsync(insertion);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Create");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                return View(ex);
             }
 
-            return View();
         }
 
         [Route("update")]
