@@ -63,32 +63,56 @@ namespace PruebaNivelacion.Controllers
         [HttpGet]
         public async Task<IActionResult> View(int id)
         {
-                var book = await _context.Books.FirstOrDefaultAsync(book => book.Id_libro == id); 
+            var book = await _context.Books.FirstOrDefaultAsync(book => book.Id_libro == id);
 
-                if(book != null) 
+            if (book != null)
+            {
+                var injection = new BookModel
                 {
-                    var injection = new BookModel
-                    {
 
-                        Id_libro = book.Id_libro, Nombre_libro = book.Nombre_libro,
-                        Autor = book.Autor,
-                        Fecha_lanzamiento = book.Fecha_lanzamiento,
-                        Campos_auditoria = book.Campos_auditoria
+                    Id_libro = book.Id_libro,
+                    Nombre_libro = book.Nombre_libro,
+                    Autor = book.Autor,
+                    Fecha_lanzamiento = book.Fecha_lanzamiento,
+                    Campos_auditoria = book.Campos_auditoria
 
-                    };
+                };
 
-                    return View(injection);
-                }
+                return View(injection);
+            }
 
             return RedirectToAction("Index");
 
         }
 
         [HttpPost]
+        public async Task<IActionResult> Update(BookModel book)
+        {
+            var bookToUpdate = await _context.Books.FindAsync(book.Id_libro);
+            string userUpdater = "theUpdater";
+
+            if (bookToUpdate != null)
+            {
+                var result = await _context.Database.ExecuteSqlRawAsync
+                    ("exec SP_ActualizarLibros @p0, @p1, @p2, @p3, @p4",
+                    book.Id_libro,
+                    book.Nombre_libro,
+                    book.Autor,
+                    book.Fecha_lanzamiento,
+                    userUpdater);
+
+                return RedirectToAction("Books");
+
+            }
+            return RedirectToAction("Books");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Delete(BookModel book)
         {
             var bookToDelete = _context.Books.Find(book.Id_libro);
-            if (bookToDelete  != null) {
+            if (bookToDelete != null)
+            {
                 _context.Books.Remove(bookToDelete);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Books");
