@@ -111,7 +111,7 @@ namespace PruebaNivelacion.Controllers
 
             }
             //This generate an error
-            return RedirectToAction("Update");
+            return RedirectToAction("Books");
         }
 
         [HttpPost]
@@ -125,7 +125,7 @@ namespace PruebaNivelacion.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Books");
             }
-            return RedirectToAction("Update");
+            return RedirectToAction("Books");
         }
 
     }
