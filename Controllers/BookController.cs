@@ -111,21 +111,21 @@ namespace PruebaNivelacion.Controllers
 
             }
             //This generate an error
-            return RedirectToAction("Index");
+            return RedirectToAction("Update");
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(BookModel book)
         {
+            var userUpdater = HttpContext.Session.GetString("selectedSession");
             var bookToDelete = _context.Books.Find(book.Id_libro);
-            if (bookToDelete != null)
+            if (bookToDelete != null && userUpdater != null)
             {
                 _context.Books.Remove(bookToDelete);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Books");
             }
-            return RedirectToAction("Books");
-
+            return RedirectToAction("Update");
         }
 
     }

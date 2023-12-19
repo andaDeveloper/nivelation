@@ -1,0 +1,21 @@
+﻿@model PruebaNivelacion.Models.BookModel
+
+@using (Html.BeginForm("Create", "Book", FormMethod.Post))
+{
+
+<div class="form-group">
+    <label> Nombre del libro </label>
+    @Html.TextBoxFor(field => field.Nombre_libro)
+</div>
+<div class="form-group">
+    <label> Nombre del autor </label>
+    @Html.TextBoxFor(field => field.Autor)
+</div>
+<div class="form-group">
+    <label> Fecha de lanzamiento </label>
+    @Html.TextBoxFor(field => field.Fecha_lanzamiento)
+</div>
+<input type="submit" value="Submit"/>
+<a asp-action="Books">Volver a la lista</a>
+}
+
