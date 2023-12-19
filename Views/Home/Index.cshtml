@@ -1,8 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@model PruebaNivelacion.Models.UserModel
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Working on....</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<select asp-for="Id" asp-items=@ViewBag.users> 
+    
+</select>
+
