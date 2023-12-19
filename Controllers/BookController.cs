@@ -16,9 +16,9 @@ namespace PruebaNivelacion.Controllers
         }
         public async Task<ActionResult> Books()
         {
-            var books = await _context.Books.ToListAsync();
+            var bookList = await _context.Books.ToListAsync();
 
-            return View(books);
+            return View(bookList);
 
         }
 
@@ -61,30 +61,28 @@ namespace PruebaNivelacion.Controllers
             }
 
             }
-
                 return View();
-
         }
 
         [HttpGet]
         public async Task<IActionResult> View(int id)
         {
-            var book = await _context.Books.FirstOrDefaultAsync(book => book.Id_libro == id);
+            var bookToCheck = await _context.Books.FirstOrDefaultAsync(book => book.Id_libro == id);
 
-            if (book != null)
+            if (bookToCheck != null)
             {
-                var injection = new BookModel
+                var dataInjection = new BookModel
                 {
 
-                    Id_libro = book.Id_libro,
-                    Nombre_libro = book.Nombre_libro,
-                    Autor = book.Autor,
-                    Fecha_lanzamiento = book.Fecha_lanzamiento,
-                    Campos_auditoria = book.Campos_auditoria
+                    Id_libro = bookToCheck.Id_libro,
+                    Nombre_libro = bookToCheck.Nombre_libro,
+                    Autor = bookToCheck.Autor,
+                    Fecha_lanzamiento = bookToCheck.Fecha_lanzamiento,
+                    Campos_auditoria = bookToCheck.Campos_auditoria
 
                 };
 
-                return View(injection);
+                return View(dataInjection);
             }
 
             return RedirectToAction("Index");
