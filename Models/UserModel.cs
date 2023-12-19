@@ -5,11 +5,13 @@
         public int Id { get; set; }
         public string Nick { get; set; }
 
-       public UserModel(string name) { 
-            var rand = new Random();
-            this.Id = rand.Next(1, 1000000);
+       public UserModel(string nick, int id) { 
+            //var rand = new Random();
+            //this.Id = rand.Next(1, 1000000);
 
-            this.Nick = name;
+            this.Nick = nick;
+            this.Id = id;
+
         }
     }
 }

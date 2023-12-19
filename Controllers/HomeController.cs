@@ -11,31 +11,45 @@ namespace PruebaNivelacion.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public List<UserModel> users;
+
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
+        private List<UserModel> initialize()
+        {
+            UserModel userOne = new UserModel("Paco", 1);
+            UserModel userTwo = new UserModel("Alfonso", 2);
+            UserModel userThree = new UserModel("Eduardo", 3);
+
+            users = new List<UserModel> { userOne, userTwo, userThree };
+
+            return users;
+
+        }
 
         public ActionResult Index()
         {
-            UserModel userOne = new UserModel("Paco");
-            UserModel userTwo = new UserModel("Alfonso");
-            UserModel userThree = new UserModel("Eduardo");
 
-            List<UserModel> users = new List<UserModel> { userOne, userTwo, userThree };
+            users = initialize();
             ViewBag.users = new SelectList(users,"Id", "Nick");
             return View();
         }
 
         [HttpPost]
-        public IActionResult Index(UserModel selectedUser)
+        public IActionResult SessionMaker()
         {
+            users = initialize();
 
-            HttpContext.Session.SetString("selectedSession" ,selectedUser.Nick);
             HttpContext.Session.Clear();
+            string formValue = HttpContext.Request.Form["ejemplo"];
+            var formObject = users.FirstOrDefault(user => user.Id == int.Parse(formValue)); 
+            HttpContext.Session.SetString("selectedSession" , formObject.Nick);
 
-            return View();
+
+            return RedirectToAction("Books", "Book");
         }
 
         public IActionResult Privacy()

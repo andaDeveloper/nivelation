@@ -5,7 +5,11 @@
     ViewData["Title"] = "Home";
 }
 
-<select asp-for="Id" asp-items=@ViewBag.users> 
-    
-</select>
+@* <form action="@Url.Action("Index", "Home")"> *@
+<form  asp-controller="Home" asp-action="SessionMaker" >
 
+    <select asp-for="Id" asp-items=@ViewBag.users name="ejemplo"> 
+    </select>
+
+    <input type="submit" value="Continue"/> 
+</form>

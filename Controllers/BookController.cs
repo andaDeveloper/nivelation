@@ -36,16 +36,18 @@ namespace PruebaNivelacion.Controllers
             DateTime releaseDate = newBook.Fecha_lanzamiento;
 
             //replace for user session
-            string user = "stan";
+            var userUpdater = HttpContext.Session.GetString("selectedSession");
 
-            var insertion = new BookModel
+            if (userUpdater != null)
             {
+                var insertion = new BookModel
+                {
 
-                Nombre_libro = name,
-                Autor = author,
-                Fecha_lanzamiento = releaseDate,
-                Campos_auditoria = user
-            };
+                    Nombre_libro = name,
+                    Autor = author,
+                    Fecha_lanzamiento = releaseDate,
+                    Campos_auditoria = userUpdater
+                };
 
             try
             {
@@ -57,6 +59,10 @@ namespace PruebaNivelacion.Controllers
             {
                 return View(ex);
             }
+
+            }
+
+                return View();
 
         }
 
@@ -89,11 +95,11 @@ namespace PruebaNivelacion.Controllers
         public async Task<IActionResult> Update(BookModel book)
         {
             var bookToUpdate = await _context.Books.FindAsync(book.Id_libro);
-            string userUpdater = "theUpdater";
+            var userUpdater = HttpContext.Session.GetString("selectedSession");
 
-            if (bookToUpdate != null)
+            if (bookToUpdate != null && userUpdater != null)
             {
-                var result = await _context.Database.ExecuteSqlRawAsync
+                await _context.Database.ExecuteSqlRawAsync
                     ("exec SP_ActualizarLibros @p0, @p1, @p2, @p3, @p4",
                     book.Id_libro,
                     book.Nombre_libro,
@@ -104,7 +110,8 @@ namespace PruebaNivelacion.Controllers
                 return RedirectToAction("Books");
 
             }
-            return RedirectToAction("Books");
+            //This generate an error
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
