@@ -50,19 +50,19 @@ namespace PruebaNivelacion.Controllers
                     Campos_auditoria = userUpdater
                 };
 
-            try
-            {
-                await _context.Books.AddAsync(insertion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Books");
-            }
-            catch (Exception ex)
-            {
-                return View(ex);
-            }
+                try
+                {
+                    await _context.Books.AddAsync(insertion);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Books");
+                }
+                catch (Exception ex)
+                {
+                    return View(ex);
+                }
 
             }
-                return View();
+            return View();
         }
 
         [HttpGet]

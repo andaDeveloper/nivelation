@@ -27,7 +27,7 @@ namespace PruebaNivelacion.Controllers
         public ActionResult Index()
         {
 
-            ViewBag.users = new SelectList(users,"Id", "Nick");
+            ViewBag.users = new SelectList(users, "Id", "Nick");
             return View();
         }
 
@@ -36,8 +36,8 @@ namespace PruebaNivelacion.Controllers
         {
             HttpContext.Session.Clear();
             string formValue = HttpContext.Request.Form["ejemplo"];
-            var formObject = users.FirstOrDefault(user => user.Id == int.Parse(formValue)); 
-            HttpContext.Session.SetString("selectedSession" , formObject.Nick);
+            var formObject = users.FirstOrDefault(user => user.Id == int.Parse(formValue));
+            HttpContext.Session.SetString("selectedSession", formObject.Nick);
 
 
             return RedirectToAction("Books", "Book");
