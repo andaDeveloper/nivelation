@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Microsoft.EntityFrameworkCore;
 using PruebaNivelacion.Models;
 
@@ -77,6 +78,7 @@ namespace PruebaNivelacion.Controllers
                     Id_libro = bookToCheck.Id_libro,
                     Nombre_libro = bookToCheck.Nombre_libro,
                     Autor = bookToCheck.Autor,
+                    //Fecha_lanzamiento = DateTime.SpecifyKind(bookToCheck.Fecha_lanzamiento, DateTimeKind.Unspecified),
                     Fecha_lanzamiento = bookToCheck.Fecha_lanzamiento,
                     Campos_auditoria = bookToCheck.Campos_auditoria
 
