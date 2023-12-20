@@ -117,6 +117,20 @@ namespace PruebaNivelacion.Controllers
         {
             var userUpdater = HttpContext.Session.GetString("selectedSession");
             var bookToDelete = _context.Books.Find(book.Id_libro);
+
+            if (bookToDelete != null && userUpdater != null)
+            {
+                _context.Books.Remove(bookToDelete);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Books");
+            }
+            return RedirectToAction("Books");
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userUpdater = HttpContext.Session.GetString("selectedSession");
+            var bookToDelete = await _context.Books.FindAsync(id);
+
             if (bookToDelete != null && userUpdater != null)
             {
                 _context.Books.Remove(bookToDelete);
