@@ -6,13 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-//config user secrets
-builder.Configuration.AddUserSecrets<BookController>();
-
 //config database string connection
 builder.Services.AddDbContext<BookContext>(
     options =>
-        options.UseSqlServer(builder.Configuration["BooksConnection:ConnectionString"])
+        options.UseSqlServer(builder.Configuration["BooksConnection_ConnectionString"])
     );
 
 builder.Services.AddControllersWithViews();
@@ -24,6 +21,8 @@ builder.Services.AddSession(options =>
             options.Cookie.IsEssential = true;
         }
     );
+
+builder.Configuration.AddEnvironmentVariables();
 
 var app = builder.Build();
 
@@ -41,6 +40,9 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    //config user secrets
+    builder.Configuration.AddUserSecrets<BookController>();
+
 }
 
 app.UseHttpsRedirection();
