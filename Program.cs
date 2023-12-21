@@ -1,14 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using PruebaNivelacion.Controllers;
 using PruebaNivelacion.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//config user secrets
+builder.Configuration.AddUserSecrets<BookController>();
+
+//config database string connection
 builder.Services.AddDbContext<BookContext>(
     options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("BooksConnection"))
+        options.UseSqlServer(builder.Configuration["BooksConnection:ConnectionString"])
     );
 
 builder.Services.AddControllersWithViews();
