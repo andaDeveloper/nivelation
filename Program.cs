@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 //config database string connection
 builder.Services.AddDbContext<BookContext>(
     options =>
-        //options.UseSqlServer(builder.Configuration["BooksConnection_ConnectionString"])
+        options.UseSqlServer(builder.Configuration["BooksConnection_ConnectionString"])
     );
 
 builder.Services.AddControllersWithViews();
